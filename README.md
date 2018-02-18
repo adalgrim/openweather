@@ -10,5 +10,7 @@ Spring boot open weather service
 * Jackson
 * Lombok
 * maven
+* swagger
+* ehcache to cache results for 60 seconds
 
 * Swagger documentation http://localhost:8085/swagger-ui.html
