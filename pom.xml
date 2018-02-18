@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.example</groupId>
+	<artifactId>weather</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>weather</name>
+	<description>Demo project</description>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.10.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<spring-cloud.version>Edgware.SR2</spring-cloud.version>
+        <maven.checkstyle.plugin.version>3.0.0</maven.checkstyle.plugin.version>
+        <maven.sevntu.checkstyle.plugin.version>1.27.0</maven.sevntu.checkstyle.plugin.version>
+        <maven.sevntu-checkstyle-check.checkstyle.version>8.8</maven.sevntu-checkstyle-check.checkstyle.version>
+	</properties>
+
+	<modules>
+		<module>openweathermap</module>
+		<module>web</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${maven.checkstyle.plugin.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>com.github.sevntu-checkstyle</groupId>
+						<artifactId>sevntu-checkstyle-maven-plugin</artifactId>
+						<version>${maven.sevntu.checkstyle.plugin.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>${maven.sevntu-checkstyle-check.checkstyle.version}</version>
+					</dependency>
+				</dependencies>
+				<!-- Specifying configuration here will take effect on the execution of "mvn checkstyle:checkstyle",
+                     but will not take effect on the execution of "mvn site"  -->
+				<executions>
+					<execution>
+						<id>sevntu-checkstyle-check</id>
+						<phase>verify</phase>
+						<configuration>
+							<configLocation>checkstyle.xml</configLocation>
+							<failOnViolation>true</failOnViolation>
+							<includeResources>false</includeResources>
+							<includeTestResources>false</includeTestResources>
+							<logViolationsToConsole>true</logViolationsToConsole>
+							<maxAllowedViolations>0</maxAllowedViolations>
+							<violationSeverity>error</violationSeverity>
+							<propertyExpansion>project.basedir=${project.basedir}</propertyExpansion>
+							<sourceDirectories>
+								<sourceDirectory>${project.basedir}/src</sourceDirectory>
+							</sourceDirectories>
+							<excludes>**/it/resources/**/*,**/test/resources/**/*,**/test/resources-noncompilable/**/*</excludes>
+						</configuration>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
