@@ -96,11 +96,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>com.google.appengine</groupId>
-				<artifactId>appengine-maven-plugin</artifactId>
-				<version>1.9.62</version>
-			</plugin>
 		</plugins>
 	</build>
 
