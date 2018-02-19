@@ -15,16 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/weather/")
 public class WeatherController {
-
-    static class HttpStatusCode {
-        static final int OK = 200;
-        static final int NOT_FOUND = 404;
-    }
 
     @Autowired
     private OpenWeather service;
@@ -33,8 +29,8 @@ public class WeatherController {
     @GetMapping("/temperature")
     @ApiOperation(value = "View temperature forecast for 5 days", response = Iterable.class)
     @ApiResponses(value = {
-            @ApiResponse(code = HttpStatusCode.OK, message = "Successfully retrieved list"),
-            @ApiResponse(code = HttpStatusCode.NOT_FOUND,
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Successfully retrieved list"),
+            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND,
                     message = "The resource you were trying to reach is not found")
     }
     )
@@ -46,8 +42,8 @@ public class WeatherController {
     @GetMapping("/pressure")
     @ApiOperation(value = "View pressure forecast for 5 days", response = Iterable.class)
     @ApiResponses(value = {
-            @ApiResponse(code = HttpStatusCode.OK, message = "Successfully retrieved list"),
-            @ApiResponse(code = HttpStatusCode.NOT_FOUND,
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Successfully retrieved list"),
+            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND,
                     message = "The resource you were trying to reach is not found")
     }
     )
@@ -59,8 +55,8 @@ public class WeatherController {
     @GetMapping("/humidity")
     @ApiOperation(value = "View humidity forecast for 5 days", response = Iterable.class)
     @ApiResponses(value = {
-            @ApiResponse(code = HttpStatusCode.OK, message = "Successfully retrieved list"),
-            @ApiResponse(code = HttpStatusCode.NOT_FOUND,
+            @ApiResponse(code = HttpServletResponse.SC_OK, message = "Successfully retrieved list"),
+            @ApiResponse(code = HttpServletResponse.SC_NOT_FOUND,
                     message = "The resource you were trying to reach is not found")
     }
     )
@@ -71,7 +67,7 @@ public class WeatherController {
     private ResponseEntity<List<OpenWeatherDayDTO>> getWeatherData(String city) {
         List<OpenWeatherDayDTO> openWeatherDayList = service.get5DayForecast(city);
         return (!openWeatherDayList.isEmpty())
-                ? new ResponseEntity<>(openWeatherDayList, HttpStatus.OK)
+                ? new ResponseEntity<>(openWeatherDayList, HttpStatus.OK.value())
                 : new ResponseEntity<>(openWeatherDayList, HttpStatus.NOT_FOUND);
 
     }
